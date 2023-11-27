@@ -42,7 +42,22 @@
                                     <li><a class="dropdown-item" href="/neanderthal">О Неандертальцах</a></li>
                                 </ul>
                             </li>
+                            {% if request.user.is_authenticated %}
+                                <li class="nav-item"><a class="nav-link disabled"
+                                                        STYLE="color: white;">Логин: {{ user.username }}</a></li>
+                                <li class="nav-item"><a class="nav-link active" aria-current="page"
+                                                        href="{% url 'logout' %}">Выход</a></li>
+                            {% else %}
+                                <li class="nav-item"><a class="nav-link active" href="#regModal" data-bs-toggle="modal">Регистрация</a>
+                                </li>
+                                <li class="nav-item"><a class="nav-link active" href="#logModal" data-bs-toggle="modal">Вход</a>
+                                </li>
+                            {% endif %}
+                            <li class="nav-item">
+                                <a class="nav-link active" aria-current="page" href="{% url 'LSTM' %}">LSTM</a>
+                            </li>
                             <div id="google_translate_element"></div>
+
                             <script type="text/javascript">
                                 function googleTranslateElementInit() {
                                     new google.translate.TranslateElement({
@@ -51,19 +66,10 @@
                                     }, 'google_translate_element');
                                 }
                             </script>
+
                             <script type="text/javascript"
                                     src="https://translate.google.com/translate_a/element.js?cb=googleTranslateElementInit">
                             </script>
-                            {% if request.user.is_authenticated %}
-                                <li class="nav-item"><a class="nav-link disabled" STYLE="color: white;">Логин: {{ user.username }}</a></li>
-                                <li class="nav-item"><a class="nav-link active" aria-current="page" href="{% url 'logout' %}">Выход</a></li>
-                            {% else %}
-                                <li class="nav-item"><a class="nav-link active" href="#regModal" data-bs-toggle="modal">Регистрация</a></li>
-                                <li class="nav-item"><a class="nav-link active" href="#logModal" data-bs-toggle="modal">Вход</a></li>
-                            {% endif %}
-                            <li class="nav-item">
-                                <a class="nav-link active" aria-current="page" href="{% url 'LSTM' %}">LSTM</a>
-                            </li>
                         </ul>
                     </div>
                 </div>
@@ -78,8 +84,10 @@
                          style="background: linear-gradient(90deg, rgba(0,36,21,0.92) 0%, rgba(70,6,6,1) 50%, rgba(0,36,21,0.92) 100%);">
                         <div class="card-body text-white">
                             <center>
-                                <a href="{% url 'restart_pol_reg' %}" class="btn" style="color: black; background: white;"><h3>СДЕЛАТЬ ПРОГНОЗ</h3></a>
-                                <h1>__________________________________________________________________________________________________</h1>
+                                <a href="{% url 'restart_pol_reg' %}" class="btn"
+                                   style="color: black; background: white;"><h3>СДЕЛАТЬ ПРОГНОЗ</h3></a>
+                                <h1>
+                                    __________________________________________________________________________________________________</h1>
                                 <form method="post">
                                     {% csrf_token %}
                                 </form>

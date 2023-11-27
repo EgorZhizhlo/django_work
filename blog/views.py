@@ -1,8 +1,12 @@
 from django.contrib.auth import logout, login
 from django.contrib.auth.views import LoginView
+from django.core.paginator import Paginator
 from django.shortcuts import redirect, render
 from django.views.generic import ListView, DetailView, TemplateView, CreateView
 from django.urls import reverse_lazy
+from django.views import View
+
+from django.db.models import Q
 
 from .models import Post, DbPolRegression
 from .forms import RegisterUserForm, LoginUserForm
@@ -85,6 +89,7 @@ class SciencePageView(TemplateView):
 
 class EntertainmentPageView(TemplateView):
     template_name = 'entertainment.html'
+
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         context['form'] = RegisterUserForm
@@ -164,7 +169,6 @@ class LSTM(nn.Module):
 
 
 def LSTM_n(request):
-
     flight_data = sns.load_dataset("flights")
     print(flight_data.head())
 
@@ -215,7 +219,9 @@ def LSTM_n(request):
     positions = []
 
     for i in range(fut_pred):
-        positions.append(DbPolRegression(year=data_year[i], month=data_month[i], passengers=test_data_pass[i], predictions=predictions[i][0], wrong_answer=test_data_pass[i]-predictions[i][0]))
+        positions.append(DbPolRegression(year=data_year[i], month=data_month[i], passengers=test_data_pass[i],
+                                         predictions=predictions[i][0],
+                                         wrong_answer=test_data_pass[i] - predictions[i][0]))
 
     DbPolRegression.objects.all().delete()
     DbPolRegression.objects.bulk_create(positions)
@@ -225,3 +231,21 @@ def LSTM_n(request):
 def LSTM_site_view(request):
     DB = DbPolRegression.objects.all()
     return render(request, "LSTM.html", {"DB": DB})
+
+
+class SearchResultsView(ListView):
+    model = Post
+    template_name = 'search.html'
+    paginate_by = 3
+
+    def get_queryset(self):
+        context = {}
+        query = self.request.GET.get('q')
+        if len(query) != 0:
+            object_list = Post.objects.filter(
+                Q(title__contains=query) | Q(author__username__contains=query) | Q(body__contains=query)
+            )
+            return object_list
+        elif len(query) == 0:
+            return []
+

@@ -51,20 +51,6 @@
                                 <li><a class="dropdown-item" href="/neanderthal">О Неандертальцах</a></li>
                             </ul>
                         </li>
-                        <div id="google_translate_element"></div>
-
-                        <script type="text/javascript">
-                            function googleTranslateElementInit() {
-                                new google.translate.TranslateElement({
-                                    pageLanguage: 'ru',
-                                    layout: google.translate.TranslateElement.InlineLayout.SIMPLE
-                                }, 'google_translate_element');
-                            }
-                        </script>
-
-                        <script type="text/javascript"
-                                src="https://translate.google.com/translate_a/element.js?cb=googleTranslateElementInit">
-                        </script>
                         {% if request.user.is_authenticated %}
                             <li class="nav-item">
                                 <a class="nav-link disabled" STYLE="color: white;">Логин: {{ user.username }}</a>
@@ -87,6 +73,20 @@
                             <a class="nav-link active" aria-current="page"
                                href="{% url 'LSTM' %}">LSTM</a>
                         </li>
+                        <div id="google_translate_element"></div>
+
+                        <script type="text/javascript">
+                            function googleTranslateElementInit() {
+                                new google.translate.TranslateElement({
+                                    pageLanguage: 'ru',
+                                    layout: google.translate.TranslateElement.InlineLayout.SIMPLE
+                                }, 'google_translate_element');
+                            }
+                        </script>
+
+                        <script type="text/javascript"
+                                src="https://translate.google.com/translate_a/element.js?cb=googleTranslateElementInit">
+                        </script>
                     </ul>
                 </div>
             </div>
