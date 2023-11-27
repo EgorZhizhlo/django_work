@@ -18,7 +18,7 @@ class DbPolRegression(ml.Model):
     month = ml.CharField(max_length=30)
     passengers = ml.FloatField()
     predictions = ml.FloatField(null=True)
-    wrong_answer = ml.FloatField(null=True)
+    wrong_answer = ml.FloatField(null=True) #
 
     def __int__(self):
         return self.year
