@@ -1,5 +1,5 @@
 from django.db import models as ml
-#
+
 
 class Post(ml.Model):
     title = ml.CharField(max_length=500)
