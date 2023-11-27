@@ -239,13 +239,12 @@ class SearchResultsView(ListView):
     paginate_by = 3
 
     def get_queryset(self):
-        context = {}
         query = self.request.GET.get('q')
         if len(query) != 0:
             object_list = Post.objects.filter(
                 Q(title__contains=query) | Q(author__username__contains=query) | Q(body__contains=query)
             )
             return object_list
-        elif len(query) == 0:
+        else:
             return []
 
