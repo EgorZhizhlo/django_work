@@ -123,6 +123,7 @@
                     <li class="page-item"><a class="page-link" style="background: black; color: white"
                                              href="?page=
 
+
                                                      {{ page_obj.previous_page_number }}{% if request.GET.q %}&q={{ request.GET.q }}{% endif %}"><</a>
                     </li>
                 {% endif %}
@@ -135,6 +136,7 @@
                         <li class="page-item"><a class="page-link" style="background: black; color: white"
                                                  href="?page=
 
+
                                                          {{ p }}{% if request.GET.q %}&q={{ request.GET.q }}{% endif %}">{{ p }}</a>
                         </li>
                     {% endif %}
@@ -142,6 +144,7 @@
                 {% if page_obj.has_next %}
                     <li class="page-item"><a class="page-link" style="background: black; color: white"
                                              href="?page=
+
 
                                                      {{ page_obj.next_page_number }}{% if request.GET.q %}&q={{ request.GET.q }}{% endif %}">></a>
                     </li>

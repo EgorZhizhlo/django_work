@@ -1,10 +1,8 @@
 from django.contrib.auth import logout, login
 from django.contrib.auth.views import LoginView
-from django.core.paginator import Paginator
 from django.shortcuts import redirect, render
 from django.views.generic import ListView, DetailView, TemplateView, CreateView
 from django.urls import reverse_lazy
-from django.views import View
 
 from django.db.models import Q
 
@@ -247,4 +245,3 @@ class SearchResultsView(ListView):
             return object_list
         else:
             return []
-

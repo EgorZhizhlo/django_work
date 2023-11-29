@@ -71,6 +71,12 @@
                                     src="https://translate.google.com/translate_a/element.js?cb=googleTranslateElementInit">
                             </script>
                         </ul>
+                        <form class="d-flex" action="{% url 'search' %}" method="get">
+                            {% csrf_token %}
+                            <input class="form-control me-2" type="search" placeholder="Поиск..."
+                                   aria-label="Search" name="q">
+                            <button class="btn btn-outline-secondary" type="submit">Поиск</button>
+                        </form>
                     </div>
                 </div>
             </nav>
@@ -132,6 +138,7 @@
         </div>
     </div>
     <a href="{% url 'home' %}" class="btn" style="color: black; background: white; position: absolute; left: 1%"><</a>
+
 </div>
 </body>
 </html>
