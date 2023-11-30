@@ -3,7 +3,6 @@ from django.contrib.auth.views import LoginView
 from django.shortcuts import redirect, render
 from django.views.generic import ListView, DetailView, TemplateView, CreateView
 from django.urls import reverse_lazy
-from django.db import connection
 
 from django.db.models import Q
 
@@ -252,11 +251,6 @@ class SearchResultsView(ListView):
 class BigSearchResultsView(ListView):
     model = Post
     template_name = 'big_search.html'
-    check_box_names = {'1': 'Author_Username',
-                       '3': 'Author_Email',
-                       '4': 'Author_Password',
-                       '5': 'Title',
-                       '6': 'Body'}
 
     def get_queryset(self):
         ob = list()
