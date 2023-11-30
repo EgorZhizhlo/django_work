@@ -1,7 +1,7 @@
 from django.urls import path
 
 from .views import BlogList, BlogDetailView, AboutPageView, SciencePageView, EntertainmentPageView, \
-    NeanderthalPageView,  logout_user, LSTM_n, LSTM_site_view, SearchResultsView
+    NeanderthalPageView,  logout_user, LSTM_n, LSTM_site_view, SearchResultsView, BigSearchResultsView
 from .views import BlogList, BlogDetailView, AboutPageView, SciencePageView, EntertainmentPageView, NeanderthalPageView
 
 
@@ -16,6 +16,7 @@ urlpatterns = [
     path('LSTM/', LSTM_site_view, name='LSTM'),
     path('restart_pol_reg/', LSTM_n, name='restart_pol_reg'),
     path('search/', SearchResultsView.as_view(), name='search'),
+    path('big_search/', BigSearchResultsView.as_view(), name='big_search'),
 ]
 
 

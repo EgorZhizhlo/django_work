@@ -3,6 +3,7 @@ from django.contrib.auth.views import LoginView
 from django.shortcuts import redirect, render
 from django.views.generic import ListView, DetailView, TemplateView, CreateView
 from django.urls import reverse_lazy
+from django.db import connection
 
 from django.db.models import Q
 
@@ -242,6 +243,45 @@ class SearchResultsView(ListView):
             object_list = Post.objects.filter(
                 Q(title__contains=query) | Q(author__username__contains=query) | Q(body__contains=query)
             )
+            print(object_list)
             return object_list
         else:
             return []
+
+
+class BigSearchResultsView(ListView):
+    model = Post
+    template_name = 'big_search.html'
+    check_box_names = {'1': 'Author_Username',
+                       '3': 'Author_Email',
+                       '4': 'Author_Password',
+                       '5': 'Title',
+                       '6': 'Body'}
+
+    def get_queryset(self):
+        ob = list()
+        query = self.request.GET.get('query')
+        query_chbox = self.request.GET.getlist('query_chbox')
+        if query is not None and '1' in query_chbox:
+            for i in Post.objects.filter(Q(author__username__icontains=query)):
+                ob.append(i.author.username)
+        try:
+            if query is not None and '2' in query_chbox:
+                for i in Post.objects.filter(Q(author__date_joined=query)):
+                    ob.append(i.author.date_joined)
+        except Exception:
+            pass
+        if query is not None and '3' in query_chbox:
+            for i in Post.objects.filter(Q(author__email__icontains=query)):
+                ob.append(i.author.email)
+        if query is not None and '5' in query_chbox:
+            for i in Post.objects.filter(Q(title__icontains=query)):
+                ob.append(i.title)
+        if query is not None and '6' in query_chbox:
+            for i in Post.objects.filter(Q(body__icontains=query)):
+                ob.append(i.body)
+        ob1 = list()
+        for i in ob:
+            if i not in ob1:
+                ob1.append(i)
+        return ob1
